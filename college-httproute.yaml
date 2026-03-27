@@ -12,14 +12,14 @@ spec:
     - matches:
         - path:
             type: PathPrefix
-            value: /college
+            value: /
 
-      filters:
-        - type: URLRewrite
-          urlRewrite:
-            path:
-              type: ReplacePrefixMatch
-              replacePrefixMatch: /
+      # filters:
+      #   - type: URLRewrite
+      #     urlRewrite:
+      #       path:
+      #         type: ReplacePrefixMatch
+      #         replacePrefixMatch: /
 
       backendRefs:
         - name: college-service
