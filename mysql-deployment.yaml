@@ -45,10 +45,19 @@ spec:
             - name: mysql-storage
               mountPath: /var/lib/mysql
 
+            # ADDED (init.sql mount)
+            - name: mysql-initdb
+              mountPath: /docker-entrypoint-initdb.d
+
       volumes:
         - name: mysql-storage
           persistentVolumeClaim:
             claimName: college-mysql-pvc
+
+        # ADDED (ConfigMap volume)
+        - name: mysql-initdb
+          configMap:
+            name: mysql-init-script
 
 ---
 apiVersion: v1
