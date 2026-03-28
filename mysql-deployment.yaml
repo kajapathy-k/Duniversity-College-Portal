@@ -8,11 +8,8 @@ spec:
   replicas: 3
   minReadySeconds: 10
 
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 1
+  updateStrategy:
+  type: RollingUpdate
 
   selector:
     matchLabels:
