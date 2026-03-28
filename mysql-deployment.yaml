@@ -9,7 +9,7 @@ spec:
   minReadySeconds: 10
 
   updateStrategy:
-  type: RollingUpdate
+    type: RollingUpdate
 
   selector:
     matchLabels:
