@@ -24,9 +24,9 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: mariadb
-          image: mariadb:10.5
+          image: image: {{ .Values.mysql.image.repository }}:{{ .Values.mysql.image.tag }}
           ports:
-            - containerPort: 3306
+            - containerPort: {{ .Values.mysql.ports.containerPort }}
 
           envFrom:
             - configMapRef:
@@ -70,7 +70,7 @@ spec:
         name: college-mysql-pvc
       spec:
         accessModes: ["ReadWriteMany"]
-        storageClassName: nfs-csi-storage
+        storageClassName: {{ .Values.mysql.storage.storageClassName }}
         resources:
           requests:
             storage: 2Gi

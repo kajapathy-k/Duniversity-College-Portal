@@ -9,3 +9,15 @@ image:
 
 ports:
   containerPort: 3000
+
+mysql:
+  replicaCount: 1
+  image:
+    repository: mariadb
+    tag: 10.5
+  ports:
+    containerPort: 3306
+  storage:
+    size: 1Gi
+    storageClassName: nfs-csi-storage
+
