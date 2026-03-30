@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: college-app
-          image: "{{ .Values.image.repository }}: {{ .Values.image.tag }}"
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           ports:
             - containerPort: {{ .Values.ports.containerPort }}
 
