@@ -73,7 +73,7 @@ spec:
         storageClassName: {{ .Values.mysql.storage.storageClassName }}
         resources:
           requests:
-            storage: 2Gi
+            storage: {{ .Values.mysql.storage.size }}
 
 ---
 apiVersion: v1
