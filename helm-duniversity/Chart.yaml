@@ -1,0 +1,6 @@
+apiVersion: v2
+name: duniversity
+description: A Helm chart for duniversity application
+type: application
+version: 1.1.0 # Chart version
+appVersion: 1.1.0 # Application version

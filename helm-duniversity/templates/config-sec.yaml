@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: college-config
+  namespace: gateway-ns
+data:
+  DB_USER: "college_user"
+  DB_HOST: "college-mysql-service"
+  DB_PORT: "3306"
+
+  GRIEVANCE_DB: "grievance_db"
+  LEAVE_DB: "leave_db"
+  TIMETABLE_DB: "timetable_db"
+  EXAMS_DB: "exams_db"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: college-secret
+  namespace: gateway-ns
+type: Opaque
+stringData:
+  DB_PASSWORD: "deereddy@123"
+  MARIADB_ROOT_PASSWORD: "Root@123"

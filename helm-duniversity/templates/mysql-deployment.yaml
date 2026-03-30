@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: college-mysql
+  namespace: gateway-ns
+spec:
+  serviceName: college-mysql-service
+  replicas: 1
+  minReadySeconds: 10
+
+  updateStrategy:
+    type: RollingUpdate
+
+  selector:
+    matchLabels:
+      app: college-mysql
+
+  template:
+    metadata:
+      labels:
+        app: college-mysql
+
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: mariadb
+          image: mariadb:10.5
+          ports:
+            - containerPort: 3306
+
+          envFrom:
+            - configMapRef:
+                name: college-config
+            - secretRef:
+                name: college-secret
+
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+
+          # volumeMounts:
+          #   - name: mysql-storage
+          #     mountPath: /var/lib/mysql... (moved to volumeClaimTemplates)
+
+          volumeMounts:
+            - name: college-mysql-pvc
+              mountPath: /var/lib/mysql
+
+            # ADDED (init.sql mount)
+            - name: mysql-initdb
+              mountPath: /docker-entrypoint-initdb.d
+
+      # volumes:
+      #   - name: mysql-storage
+      #     persistentVolumeClaim:
+      #       claimName: college-mysql-pvc ... (moved to volumeClaimTemplates)
+
+        # ADDED (ConfigMap volume)
+      volumes:
+        - name: mysql-initdb
+          configMap:
+            name: mysql-init-script
+
+  volumeClaimTemplates:
+    - metadata:
+        name: college-mysql-pvc
+      spec:
+        accessModes: ["ReadWriteMany"]
+        storageClassName: nfs-csi-storage
+        resources:
+          requests:
+            storage: 2Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: college-mysql-service
+  namespace: gateway-ns
+spec:
+  selector:
+    app: college-mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+  clusterIP: None
