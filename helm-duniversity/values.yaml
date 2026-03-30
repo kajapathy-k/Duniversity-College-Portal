@@ -1,0 +1,11 @@
+app:
+  name: college-app
+
+replicaCount: 3
+
+image:
+  repository: kajapathyk/duniversity-college-portal
+  tag: latest
+
+ports:
+  containerPort: 3000

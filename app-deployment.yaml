@@ -1,10 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: college-app
+  name: {{ .Values.app.name }}
   namespace: gateway-ns
 spec:
-  replicas: 3
+  replicas: {{ .Values.replicaCount}}
+
 
   strategy:
     type: RollingUpdate
@@ -23,9 +24,10 @@ spec:
     spec:
       containers:
         - name: college-app
-          image: kajapathyk/duniversity-college-portal:latest
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           ports:
-            - containerPort: 3000
+            - containerPort: {{ .Values.ports.containerPort }}
+
 
           envFrom:
             - configMapRef:
